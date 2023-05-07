@@ -11,10 +11,10 @@ public class AnalizadorLexico {
         return linea;
     }
 
-   public static void main(String[] args) {
+   public static void main(String[] args) { //Inciio de Main
     String lineaS = comenzar();
     String[] palabras = lineaS.split("@");
-    for (int i = 0; i < palabras.length; i++) {
+    for (int i = 0; i < palabras.length; i++) {//Inicio de primer for
         String palabra = palabras[i];
         if (esNumeroInt(palabra)) {
             System.out.println(palabra + ": Numero Entero");
@@ -24,9 +24,9 @@ public class AnalizadorLexico {
             System.out.println(palabra + ": palabra");
         }
 
-        for (int j = 0; j < palabra.length(); j++) {
+        for (int j = 0; j < palabra.length(); j++) { //Inicio de segundo for
             char c = palabra.charAt(j);
-            switch (c) {
+            switch (c) { //Inicio del switch
                 case '+':
                 case '-':
                 case '*':
@@ -76,10 +76,10 @@ public class AnalizadorLexico {
                         System.out.println(c + ": es un carácter especial");
                     }
                     break;
-            }
-        }
-    }
-}
+            }//Fin de switch
+        }//Fin del segundo for
+    }//Fin de primer for
+}//Fin del main
 
 
     public static boolean esNumeroInt(String cadena) {
