@@ -11,76 +11,82 @@ public class AnalizadorLexico {
         return linea;
     }
 
-   public static void main(String[] args) { //Inciio de Main
-    String lineaS = comenzar();
-    String[] palabras = lineaS.split("@");
-    for (int i = 0; i < palabras.length; i++) {//Inicio de primer for
-        String palabra = palabras[i];
-        if (esNumeroInt(palabra)) {
-            System.out.println(palabra + ": Numero Entero");
-        } else if (esNumeroDouble(palabra)) {
-            System.out.println(palabra + ": Numero Decimal");
-        } else if (esPalabra(palabra)) {
-            System.out.println(palabra + ": palabra");
-        }
+    public static void main(String[] args) { //Inciio de Main
+        String lineaS = comenzar();
+        String[] palabras = lineaS.split("@");
+        for (int i = 0; i < palabras.length; i++) {//Inicio de primer for
+            String palabra = palabras[i];
+            if (esNumeroInt(palabra)) {
+                System.out.println(palabra + ": Numero Entero");
+            } else if (esNumeroDouble(palabra)) {
+                System.out.println(palabra + ": Numero Decimal");
+            } else if (operadorLogico(palabra)) {
+                System.out.println(palabra + ": es un operador lógico");
+            } else if (esPalabra(palabra)) {
+                System.out.println(palabra + ": palabra");
+            }
 
-        for (int j = 0; j < palabra.length(); j++) { //Inicio de segundo for
-            char c = palabra.charAt(j);
-            switch (c) { //Inicio del switch
-                case '+':
-                case '-':
-                case '*':
-                case '/':
-                case '^':
-                case '%':
-                    System.out.println(c + ": es un operador aritmético");
-                    break;
-                case '>':
-                case '<':
-                    if (j < palabra.length() - 1 && palabra.charAt(j + 1) == '=') {
-                        System.out.println(c + "=" + ": operador relacional");
-                        j++;
-                    } else {
-                        System.out.println(c + ": operador relacional");
-                    }
-                    break;
-                case '!':
-                    if (j < palabra.length() - 1 && palabra.charAt(j + 1) == '=') {
-                        System.out.println(c + "=" + ": operador relacional");
-                        j++;
-                    } else {
-                        System.out.println(c + ": No esta ligado a este analizador");
-                    }
-                    break;
-                case '=':
-                    if (j < palabra.length() - 1 && palabra.charAt(j + 1) == '=') {
-                        System.out.println(c + "=" + ": operador relacional");
-                        j++;
-                    } else {
-                        System.out.println(c + ": es un carácter especial");
-                    }
-                    break;
-                case ' ':
-                    System.out.println(c + ": es un separador");
-                    break;
-                case '\r':
-                case '\n':
-                    System.out.println(c + ": es un fin de línea");
-                    break;
-                default:
-                    if (esDigito(c)) {
-                        System.out.println(c + ": es un dígito");
-                    } else if (esLetra(c)) {
-                        System.out.println(c + ": es una letra");
-                    } else {
-                        System.out.println(c + ": es un carácter especial");
-                    }
-                    break;
-            }//Fin de switch
-        }//Fin del segundo for
-    }//Fin de primer for
-}//Fin del main
-
+            for (int j = 0; j < palabra.length(); j++) { //Inicio de segundo for
+                char c = palabra.charAt(j);
+                switch (c) { //Inicio del switch
+                    case '+':
+                    case '-':
+                    case '*':
+                    case '/':
+                    case '^':
+                    case '%':
+                        System.out.println(c + ": es un operador aritmético");
+                        break;
+                    case '>':
+                    case '<':
+                        if (j < palabra.length() - 1 && palabra.charAt(j + 1) == '=') {
+                            System.out.println(c + "=" + ": operador relacional");
+                            j++;
+                        } else {
+                            System.out.println(c + ": operador relacional");
+                        }
+                        break;
+                    case '!':
+                        if (j < palabra.length() - 1 && palabra.charAt(j + 1) == '=') {
+                            System.out.println(c + "=" + ": operador relacional");
+                            j++;
+                        } else {
+                            System.out.println(c + ": No esta ligado a este analizador");
+                        }
+                        break;
+                    case '=':
+                        if (j < palabra.length() - 1 && palabra.charAt(j + 1) == '=') {
+                            System.out.println(c + "=" + ": operador relacional");
+                            j++;
+                        } else {
+                            System.out.println(c + ": es un carácter especial");
+                        }
+                        break;
+                    case ' ':
+                        System.out.println(c + ": es un separador");
+                        break;
+                    case '\r':
+                    case '\n':
+                        System.out.println(c + ": es un fin de línea");
+                        break;
+                    default:
+                        if (esDigito(c)) {
+                            System.out.println(c + ": es un dígito");
+                        } else if (esLetra(c)) {
+                            if (operadorLogico(palabra.substring(j))) {
+                                System.out.println(palabra.substring(j) + ": es un operador lógico");
+                                j = palabra.length(); // Salta el resto de la palabra
+                            } else {
+                                System.out.println(c + ": es una letra");
+                            }
+                        } else {
+                            System.out.println(c + ": es un carácter especial");
+                        }
+                        break;
+                }//Fin de switch
+            }//Fin del segundo for
+        }//Fin de primer for
+    }//Fin del main
 
     public static boolean esNumeroInt(String cadena) {
         try {
